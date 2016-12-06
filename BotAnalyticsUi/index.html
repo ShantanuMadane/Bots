@@ -1,0 +1,36 @@
+<html class="bg-black">
+    <head>
+        <meta charset="UTF-8">
+        <title>Bot Analytics| Log In</title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="bootstrap/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+        <link rel="shortcut icon" type="image/x-icon" href="./public/images/logo.png"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./public/js/ajaxindicator.js"></script>
+    </head>
+    <body class="bg-black">
+        <div class="form-box" id="login-box">
+            <div class="text-center">
+                <img src="./public/images/logo.png" alt="" title="SMS GupShup - Powered by Webaroo" style="margin-bottom: 10px">
+            </div>
+            <div class="header">Sign In</div>
+            <form method="post" name="loginform" class="login-container">
+                <div class="body bg-gray">
+                    <div class="form-group">
+                        <input type="text" name="username" class="form-control" id="botuserid" placeholder="User ID"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-control" id="botpass" placeholder="Password"/>
+                    </div>   
+                    <p id="errmsg" class="hide" style=""></p>
+                </div>
+                <div class="footer">                                                               
+                    <input type="button" id="login" value="Sign me in" class="btn btn-primary btn-block" onclick="validate()">  
+                </div>
+            </form>
+        </div>
+        <script src="./public/js/checklogin.js"></script>
+    </body>
+</html>

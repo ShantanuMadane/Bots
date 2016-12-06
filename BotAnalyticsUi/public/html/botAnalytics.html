@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" type="image/x-icon" href="../images/logo.png"/>
+        <title>Bot Analytics| Dashboard</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <!-- Bootstrap 3.3.6 -->
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+
+        <!-- Date Picker -->
+        <link rel="stylesheet" href="../../plugins/datepicker/datepicker3.css">
+        <!-- Daterange picker -->
+        <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
+
+        </script>
+
+    </head>
+    <body class="hold-transition skin-blue sidebar-collapse" >
+        <input type="hidden" id="bot_id" name="bot_id" value="">
+        <input type="hidden" id="token" name="token" value="">
+        <input type="hidden" id="botname" name="botname" value="">
+        <div class="wrapper ">
+            <header class="main-header " style="background-color:white "/>
+            <span class="pull-left " style="margin:10px">
+                <img  src="../images/logo.png" style="width:200px"/></span>
+            <nav class="navbar navbar-static-top ">
+                <div class="navbar-custom-menu ">
+                    <ul class="nav navbar-nav" style="margin:10px">
+                        
+                        <li class=" user user-menu open">
+                            <!--  <a href="#"  aria-expanded="true"> -->
+                            <img src="../images/Bot.png" class="user-image" alt="User Image">
+                            <span class="hidden-xs" ><label id="bot_name"></label> | <a href="../../index.html"> Logout</a></span>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    </div>
+
+    <div class="content-wrapper ">
+
+
+
+        <div class="row ">
+
+            <div class="well" style="margin:20px">
+                <form class="form-inline">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control col-xs-3" name="daterange" style="margin-right:20px" id="daterange" value="" style="" readonly>
+                        <input style="" id="submitbtn" class="btn btn-primary date-button-sm" type="button" name="set" value="Submit">                       
+
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <section class="content ">
+            <!-- Small boxes (Stat box) -->
+            <div class="row surveys ">
+
+
+            </div>
+
+            <div class="row " id="pieChartData">
+
+            </div>
+
+            <div class="row " id="stage">
+
+            </div>
+
+
+
+
+        </section>
+
+
+    </div>
+
+    <footer class="main-footer ">
+        <div class="pull-right hidden-xs ">
+        </div>
+        <strong><a href="http://gupshup.io ">Gupshup © 2016.</a></strong> All rights
+        reserved.
+    </footer>
+
+
+
+    <div class="control-sidebar-bg "></div>
+
+    <script type="text/javascript">
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+        var bot_id = getUrlParameter("id");
+        var token = getUrlParameter("token");
+        var bot_name = getUrlParameter("bot_name");
+        // console.log("bit_id="+bot_id +"\ntoken=" +token);
+        $('#bot_id').val(bot_id);
+        $('#token').val(token);
+        $('#botname').val(bot_name);
+        $('#bot_name').html(bot_name);
+
+    </script>
+
+    <script src="../../plugins/jQuery/jquery-2.2.3.min.js "></script>
+
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js "></script>
+
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+
+    </script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js "></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+    <!-- daterangepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js "></script>
+    <script src="../../plugins/daterangepicker/daterangepicker.js "></script>
+    <!-- datepicker -->
+    <script src="../../plugins/datepicker/bootstrap-datepicker.js "></script>
+
+    <script src="../../dist/js/dynamic.js "></script>
+</body>
+</html>

@@ -1,0 +1,425 @@
+/** This is a sample code for your bot**/
+
+function MessageHandler(context, event) {
+    var botname = event.botname;
+    var contextobj = JSON.stringify(event.contextobj);
+
+    var msg = event.message.toLowerCase();
+    // context.sendResponse(msg);
+    if (msg == "hi" || msg == "hello" || msg == "cancel" || msg == "help" || msg=="menu" || msg=="clear") {
+        var obj = {
+            "type": "catalogue",
+            "msgid": "cat_212",
+            "items": [{
+                    "title": "Get Requisition Details",
+                    "subtitle": "Gives Requisition Details",
+                    "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                    "options": [
+                        {
+                            "type": "text",
+                            "title": "Get Details"
+                        }
+
+                    ]
+                },
+                {
+                    "title": "Get Requisition Changes",
+                    "subtitle": "Gets Requisition Changes",
+                    "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                    "options": [
+                        {
+                            "type": "text",
+                            "title": "Get Changes"
+                        }]
+                },
+                {
+                    "title": "Get Group Members",
+                    "subtitle": "Gets Group Members of the group",
+                    "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                    "options": [
+                        {
+                            "type": "text",
+                            "title": "Get Members"
+                        }]
+                },
+                {
+                    "title": "Approve or Deny requisition",
+                    "subtitle": "Approves or Deny requisition",
+                    "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                    "options": [
+                        {
+                            "type": "text",
+                            "title": "Approve"
+                        },
+                        {
+                            "type": "text",
+                            "title": "Deny"
+                        }
+                    ]
+                }
+            ]
+        };
+        MyMessageHandler(botname, contextobj, "Welcome to SAP Ariba sandbox api test module. The below api list is currently accessible and can be tested.", context, function (data) {
+            context.simpledb.roomleveldata.state = "start_msg";
+            context.sendResponse(JSON.stringify(obj));
+        });
+    }
+    if (msg == "get details 1") {
+        //  context.sendResponse("inside 1")
+        context.simpledb.clearAll();
+        context.simpledb.roomleveldata.start = 0;
+        context.simpledb.roomleveldata.end = 0;
+        context.simpledb.saveData();
+        paginateGetRequisition(context, event);
+
+    } else if (msg == "get changes 2") {
+        context.simpledb.clearAll();
+        context.simpledb.roomleveldata.start = 0;
+        context.simpledb.roomleveldata.end = 3;
+        context.simpledb.saveData();
+        paginateGetChanges(context, event);
+
+    } else if (msg == "get members 3") {
+
+        context.simpledb.roomleveldata.start = 0;
+        context.simpledb.roomleveldata.end = 10;
+        context.simpledb.saveData();
+        paginateGroups(context, event);
+    } else if (msg == "approve 4" || msg == "deny 4") {
+        //context.sendResponse("This api is not working as of now,Please try again later");
+        MyMessageHandler(botname, contextobj, "This api is not working as of now,Please try again later.", context, function (data) {
+            var obj = {
+                "type": "catalogue",
+                "msgid": "cat_212",
+                "items": [{
+                        "title": "Get Requisition Details",
+                        "subtitle": "Gives Requisition Details",
+                        "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                        "options": [
+                            {
+                                "type": "text",
+                                "title": "Get Details"
+                            }
+
+                        ]
+                    },
+                    {
+                        "title": "Get Requisition Changes",
+                        "subtitle": "Gets Requisition Changes",
+                        "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                        "options": [
+                            {
+                                "type": "text",
+                                "title": "Get Changes"
+                            }]
+                    },
+                    {
+                        "title": "Get Group Members",
+                        "subtitle": "Gets Group Members of the group",
+                        "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                        "options": [
+                            {
+                                "type": "text",
+                                "title": "Get Members"
+                            }]
+                    },
+                    {
+                        "title": "Approve or Deny requisition",
+                        "subtitle": "Approves or Deny requisition",
+                        "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                        "options": [
+                            {
+                                "type": "text",
+                                "title": "Approve"
+                            },
+                            {
+                                "type": "text",
+                                "title": "Deny"
+                            }
+                        ]
+                    }
+                ]
+            };
+            context.simpledb.roomleveldata.state = "start_msg";
+            context.sendResponse(JSON.stringify(obj));
+
+        });
+
+    } else if (context.simpledb.roomleveldata.state == "get group members") {
+        if (msg == "view more") {
+            paginateGroups(context, event);
+        } else if (!isNaN(msg)) {
+            generateApiToken(context, event, function (access_token) {
+                if (access_token) {
+                    var groupdata = JSON.parse(context.simpledb.roomleveldata.groupdata);
+                    var groupid = groupdata[msg].id;
+                    var header = {"Authorization": "Bearer " + access_token, "apikey": "983300da683b4ae68b605bb66b64bc48"};
+                    var url = "https://openapi.ariba.com/api/approval/v1/prod/groups/" + groupid + "/members?realm=hergegoilinc2-T";
+                    context.simplehttp.makeGet(url, header, function (context, event) {
+                        var res = JSON.parse(event.getresp);
+                        if (res.length == 0) {
+                            context.sendResponse("There are no members in this group.");
+                        } else
+                            context.sendResponse(event.getresp);
+                    });
+                }
+            });
+        }
+    } else if (context.simpledb.roomleveldata.state == "get requisation data") {
+        if (msg == "view more") {
+            paginateGetRequisition(context, event);
+        }
+
+    } else if (context.simpledb.roomleveldata.state == "get requisation changes") {
+        if (msg == "view more") {
+            paginateGetChanges(context, event);
+        }
+    }
+}
+function paginateGetChanges(context, event) {
+    var botname = event.botname;
+    var contextobj = JSON.stringify(event.contextobj);
+    generateApiToken(context, event, function (access_token) {
+        if (access_token) {
+            var header = {"Authorization": "Bearer " + access_token, "apikey": "983300da683b4ae68b605bb66b64bc48"};
+            var url = "https://openapi.ariba.com/api/approval/v1/prod/changes?realm=hergegoilinc2-T";
+            context.simplehttp.makeGet(url, header, function (context, event) {
+//                    context.sendResponse(event.getresp);
+                //  context.simpledb.roomleveldata.changedata = event.getresp;
+                var res = JSON.parse(event.getresp);
+                var finalstr = "Below is the output of 'GetRequisitionChanges' api:\n";
+                var start = context.simpledb.roomleveldata.start;
+                var end = context.simpledb.roomleveldata.end;
+                for (var i = start; i < end; i++) {
+                    finalstr += JSON.stringify(res[i]);
+                    finalstr += "\n";
+                }
+                //start = end;
+                context.simpledb.roomleveldata.start = end;
+                if (end + 3 > res.length) {
+                    //end = res.length;
+                    context.simpledb.roomleveldata.end = res.length;
+                } else {
+                    //end = end + 10;
+                    context.simpledb.roomleveldata.end = end + 3;
+                }
+                var viewmorechanges = {
+                    "type": "quick_reply",
+                    "content": {
+                        "type": "text",
+                        "text": "  "
+                    },
+                    "msgid": "qr_212",
+                    "options": [
+                        "View More"
+                    ]};
+                MyMessageHandler(botname, contextobj, finalstr, context, function (data) {
+                    context.simpledb.roomleveldata.state = "get requisation changes";
+                    context.sendResponse(JSON.stringify(viewmorechanges));
+                });
+
+            });
+        }
+    });
+}
+function paginateGetRequisition(context, event) {
+    var botname = event.botname;
+    var contextobj = JSON.stringify(event.contextobj);
+    generateApiToken(context, event, function (access_token) {
+        if (access_token) {
+            var header = {"Authorization": "Bearer " + access_token, "apikey": "983300da683b4ae68b605bb66b64bc48"};
+            var url = "https://openapi.ariba.com/api/approval/v1/prod/requisitions/PR22?realm=hergegoilinc2-T";
+            context.simplehttp.makeGet(url, header, function (context, event) {
+                //context.sendResponse(event.getresp);
+                var res = event.getresp;
+                // context.sendResponse(res);
+                if (context.simpledb.roomleveldata.start == 0) {
+
+                    context.simpledb.roomleveldata.start = 0;
+                    context.simpledb.roomleveldata.end = Math.floor(res.length / 4);
+                    context.simpledb.saveData();
+                }
+                var start = context.simpledb.roomleveldata.start;
+                var end = context.simpledb.roomleveldata.end;
+
+                var json = "Below is the output of 'GetRequisitionDetails' api:\n";
+                // context.sendResponse(res[5]);
+                for (var i = start; i < end; i++) {
+                    json += res[i];
+                }
+
+                if (end + start > res.length) {
+                    //end = res.length;
+                    context.simpledb.roomleveldata.end = res.length;
+                } else {
+                    //end = end + 10;
+                    context.simpledb.roomleveldata.end = end + Math.floor(res.length / 4);
+                }
+                context.simpledb.roomleveldata.start = end;
+                context.simpledb.saveData();
+                var viewmorereqdata = {
+                    "type": "quick_reply",
+                    "content": {
+                        "type": "text",
+                        "text": "  "
+                    },
+                    "msgid": "qr_212",
+                    "options": [
+                        "View More"
+                    ]};
+                MyMessageHandler(botname, contextobj, json, context, function (data) {
+                    context.simpledb.roomleveldata.state = "get requisation data";
+                    context.sendResponse(JSON.stringify(viewmorereqdata));
+                });
+            });
+        }
+    });
+}
+function paginateGroups(context, event) {
+    var botname = event.botname;
+    var contextobj = JSON.stringify(event.contextobj);
+    generateApiToken(context, event, function (access_token) {
+        if (access_token) {
+            var header = {"Authorization": "Bearer " + access_token, "apikey": "983300da683b4ae68b605bb66b64bc48"};
+            var url = "https://openapi.ariba.com/api/approval/v1/prod/groups?realm=hergegoilinc2-T";
+            context.simplehttp.makeGet(url, header, function (context, event) {
+                // context.sendResponse(event.getresp);
+                context.simpledb.roomleveldata.groupdata = event.getresp;
+                var res = JSON.parse(event.getresp);
+                var finalstr = "Please select one among the following id's.Type 1 to select 1st id.\n"
+                var start = context.simpledb.roomleveldata.start;
+                var end = context.simpledb.roomleveldata.end;
+                for (var i = start; i < end; i++) {
+                    finalstr += i;
+                    finalstr += ".";
+                    finalstr += res[i]["id"];
+                    finalstr += "\n";
+                }
+                //start = end;
+                context.simpledb.roomleveldata.start = end;
+                if (end + 10 > res.length) {
+                    //end = res.length;
+                    context.simpledb.roomleveldata.end = res.length;
+                } else {
+                    //end = end + 10;
+                    context.simpledb.roomleveldata.end = end + 10;
+                }
+                var viewmoreids = {
+                    "type": "quick_reply",
+                    "content": {
+                        "type": "text",
+                        "text": "  "
+                    },
+                    "msgid": "qr_212",
+                    "options": [
+                        "View More"
+                    ]};
+                MyMessageHandler(botname, contextobj, finalstr, context, function (data) {
+                    context.simpledb.roomleveldata.state = "get group members";
+                    context.sendResponse(JSON.stringify(viewmoreids));
+                });
+            });
+        }
+    });
+}
+function MyMessageHandler(botname, contextobj, botmessage, context, callback) {
+    var url = "http://api.gupshup.io/sm/api/bot/" + botname + "/msg";
+    var header = {
+        "Content-Type": "application/x-www-form-urlencoded"
+    };
+    var body = "apikey=4825b60b09ff46e5c6c104e0701cbd50&botname=" + botname + "&context=" + contextobj + "&message=" + encodeURI(botmessage);
+    // context.simplehttp.makePost(url,body,header);
+    context.simplehttp.makePost(url, body, header, function (context, event) {
+        //context.console.log(event.message);
+        return callback(event.message);
+    });
+
+
+}
+function generateApiToken(context, event, callback) {
+    var url = "https://api.ariba.com/v2/oauth/token";
+    var header = {"Authorization": "Basic MzdhYmZiMzItNjExYy00YjVlLTlhNGItODM3NThkOTNhYmYwOjk4MzMwMGRhNjgzYjRhZTY4YjYwNWJiNjZiNjRiYzQ4", "Content-Type": "application/x-www-form-urlencoded"};
+    var param = "grant_type=openapi_2lo";
+    context.simpledb.roomleveldata.state = "api token";
+    context.simplehttp.makePost(url, param, header, function (context, event) {
+        var res = JSON.parse(event.getresp);
+        return callback(res.access_token);
+    });
+}
+/** Functions declared below are required **/
+function EventHandler(context, event) {
+    var botname = event.botname;
+    var contextobj = JSON.stringify(event.contextobj);
+    var obj = {
+        "type": "catalogue",
+        "msgid": "cat_212",
+        "items": [{
+                "title": "Get Requisition Details",
+                "subtitle": "Gives Requisition Details",
+                "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                "options": [
+                    {
+                        "type": "text",
+                        "title": "Get Details"
+                    }
+
+                ]
+            },
+            {
+                "title": "Get Requisition Changes",
+                "subtitle": "Gets Requisition Changes",
+                "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                "options": [
+                    {
+                        "type": "text",
+                        "title": "Get Changes"
+                    }]
+            },
+            {
+                "title": "Get Group Members",
+                "subtitle": "Gets Group Members of the group",
+                "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                "options": [
+                    {
+                        "type": "text",
+                        "title": "Get Members"
+                    }]
+            },
+            {
+                "title": "Approve or Deny requisition",
+                "subtitle": "Approves or Deny requisition",
+                "imgurl": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTA2EAVPaEqIG0rhDLfAu5U_oMiAT2nW3p0Mobo17vRO67iIb7s",
+                "options": [
+                    {
+                        "type": "text",
+                        "title": "Approve"
+                    },
+                    {
+                        "type": "text",
+                        "title": "Deny"
+                    }
+                ]
+            }
+        ]
+    };
+//    context.simpledb.roomleveldata.state = "start_msg";
+//    context.sendResponse(JSON.stringify(obj));
+    MyMessageHandler(botname, contextobj, "Welcome to SAP Ariba sandbox api test module. The below api list is currently accessible and can be tested.", context, function (data) {
+        context.simpledb.roomleveldata.state = "start_msg";
+        context.sendResponse(JSON.stringify(obj));
+    });
+
+}
+
+function HttpResponseHandler(context, event) {
+    // if(event.geturl === "http://ip-api.com/json")
+    context.sendResponse(event.getresp);
+}
+
+function DbGetHandler(context, event) {
+    context.sendResponse("testdbput keyword was last get by:" + event.dbval);
+}
+
+function DbPutHandler(context, event) {
+    context.sendResponse("testdbput keyword was last put by:" + event.dbval);
+}
